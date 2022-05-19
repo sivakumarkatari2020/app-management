@@ -39,7 +39,8 @@ select option{
     color: rgba(0,0,0,0.7);
 }
 .month-grid .grid-box{
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     height: 400px;
 
     display: grid;

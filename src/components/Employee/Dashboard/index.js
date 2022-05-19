@@ -68,7 +68,7 @@ function Dashboard() {
                 </div>
                 <div className='btm-buttons1'>
                     <button className='button1'>Reports</button>
-                    <button className='button1'>Logout</button>
+                    <Link to={"/login"} className='button1'>Logout</Link>
                 </div>
             </div>
         </div>

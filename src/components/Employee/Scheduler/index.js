@@ -88,6 +88,10 @@ function Scheduler() {
 
             /* Object is creating and printing we can store this into database */
             console.log(obj);
+
+            setTimeout(()=>{
+                window.location.href = "/emp/dashboard";
+            },2000)
         }
     }
 

@@ -131,6 +131,11 @@
     align-items: center;
     justify-content: center;
 }
+@media (max-width:500px){
+    .illustration{
+        display: none;
+    }
+}
 .illustration .login-1{
     width: 80%;
     min-height: 500px;
