@@ -256,3 +256,12 @@
         opacity: 1;
     }
 }
+
+.link-ext{
+    width: 100%;
+    font-size: .8rem;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 1rem;
+}

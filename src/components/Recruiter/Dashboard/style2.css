@@ -1,7 +1,7 @@
 .outer{
     width: 100%;
     min-height: 100vh;
-    background-color: #fbdfcf;
+    background-color: #f7eae2;
 }
 .inner{
     width: 100%;
@@ -48,7 +48,7 @@ table tbody tr td{
     text-align: center;
 }
 table tbody tr:nth-child(even){
-    background-color: #fdc0b1;
+    background-color: #fbd9d0;
 }
 .info-stats{
     margin-top: 2rem;
@@ -59,7 +59,7 @@ table tbody tr:nth-child(even){
 }
 .btm-buttons{
     width: 40%;
-    margin-top: 10rem;
+    margin-top: 5rem;
 
     display: flex;
     flex-direction: row;
@@ -68,4 +68,65 @@ table tbody tr:nth-child(even){
 .btm-buttons button{
     width: 200px;
     font-weight: 500;
+}
+
+
+.checkbox{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+    display: none;
+}
+
+.chk-label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 50px;
+	height: 20px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+.chk-label:after {
+	content: '';
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+.checkbox:checked + .chk-label {
+	background: #e5989b;
+}
+
+.checkbox:checked + .chk-label:after {
+	left: 100%;
+	transform: translateX(-100%);
+}
+
+.chk-label:active:after {
+	width: 50px;
+}
+
+.switch-td{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.button2{
+    padding: 1rem;
+    background-color: #e5989b;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.02rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
 }

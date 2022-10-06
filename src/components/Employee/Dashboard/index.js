@@ -7,28 +7,44 @@ function Dashboard() {
 
     const data = [
         {
-            b_date: '18-05-2022',
-            b_time: '5:00 PM IST GM+5:30',
-            recruiter: 'Andrew Garfield',
-            type: 'L1'
+            name:'Leanne Graham',
+            username:'Bret',
+            email: 'Sincere@april.biz',
+            address: 'Kulas Light Gwenborough Apt. 556',
+            website: 'hidegard.org',
+            company: 'Romaguera Croma'
         },
         {
-            b_date: '21-05-2022',
-            b_time: '1:00 PM IST GM+5:30',
-            recruiter: 'Tobey Maguire',
-            type: 'L2'
+            name:'Erwin Howell',
+            username:'Antonette',
+            email: 'Shanna@melissa.tv',
+            address: 'Victor Plains Wisokyburgh Suite 879',
+            website: 'anastasia.net',
+            company: 'Deckow Crist'
         },
         {
-            b_date: '24-05-2022',
-            b_time: '11:00 AM IST GM+5:30',
-            recruiter: 'Tom Riddle',
-            type: 'L1'
+            name:'Clemantine Bauch',
+            username:'Samantha',
+            email: 'Nathan@yesenia.net',
+            address: 'Duglas Extension McKenziehaven Suite 847',
+            website: 'ramiro.info',
+            company: 'Romaguera Jacobson'
         },
         {
-            b_date: '30-05-2022',
-            b_time: '9:30 AM IST GM+5:30',
-            recruiter: 'TOm Holland',
-            type: 'L2'
+            name:'Patricia Lebsack',
+            username:'Karianne',
+            email: 'Julianne.OConner@kory.org',
+            address: 'Hoegar Mall South Elvis Apt. 692',
+            website: 'kale.biz',
+            company: 'Robel Corkey'
+        },
+        {
+            name:'Chelsey Dietrich',
+            username:'Kamren',
+            email: 'Lucio_Hettinger@annie.ca',
+            address: 'Skiles Walks Roscoeview Suite 351',
+            website: 'demarco.info',
+            company: 'Keebier LLC'
         }
     ]
 
@@ -37,16 +53,18 @@ function Dashboard() {
             <div className='inner1'>
                 <div className='header1'>
                     <h1>Dashboard</h1>
-                    <Link className='button1' to={"/emp/scheduler"}>Schedule Interview <AiOutlineSchedule className='icon'/></Link>
+                    <Link className='button1' to={"/user/scheduler"}>Register Event <AiOutlineSchedule className='icon'/></Link>
                 </div>
                 <table className='table1'>
                     <thead className='thead1'>
                         <tr className='tr1'>
                             <th className='th1'>S.No</th>
-                            <th className='th1'>Booked Date</th>
-                            <th className='th1'>Booked Time</th>
-                            <th className='th1'>Recruiter Name</th>
-                            <th className='th1'>Type of Interview</th>
+                            <th className='th1'>Name</th>
+                            <th className='th1'>Username</th>
+                            <th className='th1'>Email</th>
+                            <th className='th1'>Address</th>
+                            <th className='th1'>Website</th>
+                            <th className='th1'>Company</th>
                         </tr>
                     </thead>
                     <tbody className='tbody1'>
@@ -54,20 +72,25 @@ function Dashboard() {
                             data.map((obj,idx) => 
                                 <tr className='tr1' key={idx}>
                                     <td className='td1'>{idx+1}</td>
-                                    <td className='td1'>{obj.b_date}</td>
-                                    <td className='td1'>{obj.b_time}</td>
-                                    <td className='td1'>{obj.recruiter}</td>
-                                    <td className='td1'>{obj.type}</td>
+                                    <td className='td1'>{obj.name}</td>
+                                    <td className='td1'>{obj.username}</td>
+                                    <td className='td1'>{obj.email}</td>
+                                    <td className='td1'>{obj.address}</td>
+                                    <td className='td1'><a href={obj.website} target='new'>{obj.website}</a></td>
+                                    <td className='td1'>{obj.company}</td>
                                 </tr>
                             )
                         }
                     </tbody>
                 </table>
                 <div className='info-stats1'>
-                    <p>Stats : {data.length} interview's lined up in this month. <Link to={"/emp/stats"}>See here</Link></p>
+                    {
+                        /*
+                            <p>Stats : {data.length} interview's lined up in this month. <Link to={"/user/stats"}>See here</Link></p>
+                        */ 
+                    }
                 </div>
                 <div className='btm-buttons1'>
-                    <button className='button1'>Reports</button>
                     <Link to={"/login"} className='button1'>Logout</Link>
                 </div>
             </div>

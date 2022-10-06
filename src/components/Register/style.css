@@ -1,0 +1,19 @@
+.login-outer-new{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-form-new{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login-form-new h1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+

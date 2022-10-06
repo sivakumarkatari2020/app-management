@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {FaArrowRight} from 'react-icons/fa';
-import {ImCross} from 'react-icons/im';
-import {BsArrowLeft} from 'react-icons/bs';
+import {BsArrowLeft,BsCheck} from 'react-icons/bs';
 import './style.css'
 
 function Scheduler() {
@@ -18,159 +16,106 @@ function Scheduler() {
         "pauseOnHover":true
     }
 
-    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    const currentMnth = months[new Date().getMonth()];
-    const nextMnth = months[new Date().getMonth() + 1];
+    const [data,setData] = useState({
+        fname: '',
+        lname: '',
+        mail: '',
+        city: '',
+        date: ''
+    })
+    const [file,setFile] = useState();
+    const [loading,setLoading] = useState(false);
+    const [success,setSuccess] = useState(false);
 
-    const [month,setMonth] = React.useState(currentMnth);
-    const [noOfDays,setNoOfDays] = React.useState([]);
-    const [bookDates,setBookDates] = React.useState([]);
-    const [loading,setLoading] = React.useState(false);
-
-    const [popOpen,setPopOpen] = React.useState(false);
-    const [fromTime,setFromTime] = React.useState('');
-    const [toTime,setToTime] = React.useState('');
-
-    React.useEffect(()=>{
-        if(month === 'January' || month === 'March' || month === 'May' || month === 'August' || month === 'July' || month === 'October' || month === 'December'){
-            let days = [];
-            for(let i=0;i<31;i++){
-                days.push(i+1);
-            }
-            setNoOfDays([...days]);
-        }else{
-            let days = [];
-            for(let i=0;i<30;i++){
-                days.push(i+1);
-            }
-            setNoOfDays([...days]);        }
-    },[month])
-
-    const handleDate = (day) => {
-        console.log(bookDates);
-
-        day = Number(day);
-        let nowDate = Number(bookDates[bookDates.length - 1]);
-
-        if(!bookDates.length > 0){
-            let arr = [...bookDates];
-            arr.push(day);
-            setBookDates(arr);
-        } else if (day === nowDate+1 || day === nowDate-1){
-            let arr = [...bookDates];
-            arr.push(day);
-            setBookDates(arr);
-        } else {
-            toast.error('Please select consecutive days.',toastConfig);
-        }
+    const handleChange = (e) => {
+        setData({...data,[e.target.name]:e.target.value});
     }
 
-    const handleNext = () => {
-        if(bookDates.length < 1){
-            toast.error('Please select some dates before moving forward.')
-        }else{
-            setPopOpen(true);
-        }
+    const handleFile = (e) => {
+        setFile(e.target.files[0].name);
     }
 
-    const handlePublish = () => {
-        if(fromTime === '' && toTime === ''){
-            toast.error('Please select timings',toastConfig);
+    const handleSubmit = () => {
+        if(data.fname.length < 3){
+            toast.error("Please enter a valid Firstname",toastConfig);
+        }else if(data.lname.length < 3){
+            toast.error("Please enter a valid Lastname",toastConfig);
+        }else if(!/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(data.mail)){
+            toast.error("Please enter a valid email",toastConfig);
+        }else if(data.city.length < 3){
+            toast.error("Please enter a valid city name",toastConfig);
+        }else if(data.date === ''){
+            toast.error("Select a date from the calendar",toastConfig);
         }else{
             setLoading(true);
-
-            let obj = {
-                month : month,
-                dates : [...bookDates],
-                fromTime : fromTime,
-                toTime : toTime
-            }
-
-            /* Object is creating and printing we can store this into database */
-            console.log(obj);
-
             setTimeout(()=>{
-                window.location.href = "/emp/dashboard";
-            },2000)
+                setSuccess(true);
+                setLoading(false);
+            },2000);
         }
     }
 
     return (
         <div className='outer1'>
             <ToastContainer />
-
-            {/* This popup box will appear once click next */}
-                
-            {
-                popOpen
-                ? <div className='pop-window'>
-                    <div className='pop-msg'>
-                        <div className='btn-lf' style={{width:'100%'}}>
-                            <ImCross className='icon' onClick={()=>{
-                                setPopOpen(false);
-                                setLoading(false);
-                            }}/>
-                        </div>
-                        <h1>Select Timings</h1>
-                        <p>Selected Dates : {month} {bookDates.map(day => day + ' ')}</p>
-                        <div className='row-wrap'>
-                            <div className='input-wrap'>
-                                <p>From</p>
-                                <input type="time" className='timer' onChange={(e) => setFromTime(e.target.value)}/>
-                            </div>
-                            <div className='input-wrap'>
-                                <p>To</p>
-                                <input type="time" className='timer' onChange={(e) => setToTime(e.target.value)}/>
-                            </div>
-                        </div>
-                        {
-                            loading
-                            ? <button className='button1' style={{width:'100%',marginTop:'2rem',filter:'brightness(0.7)'}}>Loading...</button>
-                            : <button className='button1' style={{width:'100%',marginTop:'2rem'}} onClick={handlePublish}>Publish</button>
-                        }
-                    </div>
-                </div>
-                : ''
-            }
-
             <div className='inner1'>
-                <div className='header1'>
-                    <h1>Schedule Interview</h1>
-                    <Link className='button1' to={"/emp/dashboard"}><BsArrowLeft className='icon'/> Back</Link>
+                <div className='header'>
+                    <Link className='nav-option' to={"/user/dashboard"}><BsArrowLeft className='icon'/> <span>Back</span></Link>
                 </div>
-
-                <div className='schedule-form'>
-                    <div className='input-wrap'>
-                        <p>Select a month</p>
-                        <select defaultValue={month} onChange={(e) => setMonth(e.target.value)}>
-                            <option value={currentMnth}>{currentMnth}</option>
-                            <option value={nextMnth}>{nextMnth}</option>
-                        </select>
+                {
+                    success
+                    ? <div className='success-status'>
+                        <BsCheck className='iconBg'/>
+                        <h2>Successfully Scheduled</h2>
                     </div>
+                    : <div className='form event-form'>
+                        <h1>Event Registration</h1>
+                        <div className='inner-form'>
+                            <div className='flex-row'>
+                                <div className='input-holder'>
+                                    <label>Firstname</label>
+                                    <input type='text' name='fname' value={data.fname} onChange={handleChange} placeholder='John'></input>
+                                </div>
+                                <div className='input-holder'>
+                                    <label>Lastname</label>
+                                    <input type='text' name='lname' value={data.lname} onChange={handleChange} placeholder='Walker'></input>
+                                </div>
+                            </div>
+                            <div className='flex-row'>
+                                <div className='input-holder'>
+                                    <label>Email</label>
+                                    <input type='mail' name='mail' value={data.mail} onChange={handleChange} placeholder='John@gmail.com'></input>
+                                </div>
+                                <div className='input-holder'>
+                                    <label>City</label>
+                                    <input type='text' name='city' value={data.city} onChange={handleChange} placeholder='e.g Mumbai'></input>
+                                </div>
+                            </div>
+                            <div className='flex-row'>
+                                <div className='input-holder'>
+                                    <label>Event Date</label>
+                                    <input type='date' name='date' value={data.date} onChange={handleChange} placeholder='12/09/2022'></input>
+                                </div>
+                                <div className='input-holder'>
+                                    <label>Upload files here</label>
+                                    {
+                                        file
+                                        ? <p>File : {file}</p>
+                                        : <input type='file' onChange={handleFile}></input> 
+                                    }
+                                </div>
+                            </div>
 
-                    <div className='month-grid'>
-                        <p>Select a continous date slot</p>
-                        <div className='grid-box'>
                             {
-                                noOfDays.map(day => 
-                                    bookDates.indexOf(day) !== -1
-                                    ? <div className='grid-box-element selected' key={day} 
-                                        style={{pointerEvents:'none'}}
-                                    >{day}</div>
-                                    : <div className='grid-box-element' key={day} 
-                                        onClick={
-                                            () => handleDate(day)
-                                        }
-                                    >{day}</div>
-                                )
+                                loading
+                                ? <div className='loader'><span></span></div>
+                                : <div className='button-holder'>
+                                    <button className='full-width-button' onClick={handleSubmit}>submit</button>
+                                </div>
                             }
                         </div>
                     </div>
-                </div>
-
-                <div className='btn-lf'>
-                    <button className='button1' onClick={handleNext}>Next <FaArrowRight /></button>
-                </div>
+                }
             </div>
         </div>
     )

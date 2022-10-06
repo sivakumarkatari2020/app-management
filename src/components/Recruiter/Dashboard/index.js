@@ -1,51 +1,75 @@
-import React from 'react';
-import {AiOutlineSchedule} from 'react-icons/ai';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './style2.css';
 
 function Dashboard() {
 
-    const data = [
+    const [data,setData] = useState([
         {
-            p_name: 'Panel Chandra',
-            b_date: '18-05-2022',
-            b_time: '5:00 PM IST GM+5:30',
-            type: 'L1'
+            fname: 'Harsh Kumar',
+            lname: 'Bhogle',
+            mail: 'harsh@bhogle.com',
+            city: 'Bangalore',
+            date: '20/10/2022',
+            status: false,
         },
         {
-            p_name: 'Panel MJ',
-            b_date: '21-05-2022',
-            b_time: '1:00 PM IST GM+5:30',
-            type: 'L2'
+            fname: 'Sravan',
+            lname: 'Sangabattula',
+            mail: 'sravan.sangabatthula@gmail.com',
+            city: 'Hyderabad',
+            date: '10/10/2022',
+            status: true,
         },
         {
-            p_name: 'Panel Sasikar',
-            b_date: '24-05-2022',
-            b_time: '11:00 AM IST GM+5:30',
-            type: 'L1'
+            fname: 'Vamsi Kiran',
+            lname: 'Patnala',
+            mail: 'vamsiroy@patnala.com',
+            city: 'Pune,Maharastra',
+            date: '15/10/2022',
+            status: false,
         },
         {
-            p_name: 'Panel Steph',
-            b_date: '30-05-2022',
-            b_time: '9:30 AM IST GM+5:30',
-            type: 'L2'
+            fname: 'Mounica',
+            lname: 'Marla',
+            mail: 'mounica.marla@gmail.com',
+            city: 'Hyderabad',
+            date: '22/10/2022',
+            status: false,
+        },
+        {
+            fname: 'Pandyan',
+            lname: 'Davalagiri',
+            mail: 'pandyanpandyan@gmail.com',
+            city: 'Noida',
+            date: '20/10/2022',
+            status: true,
         }
-    ]
+    ])
+
+    const handleToggle = (idx,e) => {
+        console.log(data[idx].status);
+        let raw = data;
+        raw[idx].status = !raw[idx].status;
+        setData(raw);
+    }
 
     return (
         <div className='outer'>
             <div className='inner'>
                 <div className='header'>
-                    <h1>Booked Slots</h1>
-                    <button>Book a slot <AiOutlineSchedule className='icon'/></button>
+                    <h1>Registered Events</h1>
                 </div>
                 <table>
                     <thead>
                         <tr>
                             <th>S.No</th>
-                            <th>Panel Name</th>
-                            <th>Interview Date</th>
-                            <th>Interview Time</th>
-                            <th>Type of Interview</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                            <th>City</th>
+                            <th>Date</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,22 +77,22 @@ function Dashboard() {
                             data.map((obj,idx) => 
                                 <tr>
                                     <td>{idx+1}</td>
-                                    <td>{obj.p_name}</td>
-                                    <td>{obj.b_date}</td>
-                                    <td>{obj.b_time}</td>
-                                    <td>{obj.type}</td>
+                                    <td>{obj.fname}</td>
+                                    <td>{obj.lname}</td>
+                                    <td>{obj.mail}</td>
+                                    <td>{obj.city}</td>
+                                    <td>{obj.date}</td>
+                                    <td className='switch-td'>
+                                        <p style={{fontSize:'.5rem'}}>{obj.status ? 'Approved' : 'Rejected'}</p>
+                                        <input type="checkbox" className='checkbox' checked={obj.status} onChange={(e) => handleToggle(idx,e)} id={`switch-${idx}`} /><label for={`switch-${idx}`} className='chk-label'>Toggle</label>
+                                    </td>
                                 </tr>
                             )
                         }
                     </tbody>
                 </table>
-                <div className='info-stats'>
-                    <p>Stats : {data.length} interview's lined up in this month.</p>
-                </div>
                 <div className='btm-buttons'>
-                    <button>Show Completed</button>
-                    <button>Show Cancelled</button>
-                    <button>Logout</button>
+                    <Link to={"/login"} className='button2'>Logout</Link>
                 </div>
             </div>
         </div>

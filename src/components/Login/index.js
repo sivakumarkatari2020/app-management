@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './style.css';
@@ -18,7 +19,7 @@ function Login() {
     const [password,setPassword] = useState('');
     const [checked,setChecked] = useState(false);
     const [isSubmit,setSubmit] = useState(false);
-    const [loginType,setLoginType] = useState('Employee');
+    const [loginType,setLoginType] = useState('User');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,47 +49,47 @@ function Login() {
         }
 
         toast.success("Logged in successfully!redirecting...",toastConfig);  
-        if(loginType === 'Employee'){
+        if(loginType === 'User'){
             setTimeout(()=>{
-                window.location.href = "/emp/dashboard";
+                window.location.href = "/user/dashboard";
             },1000) 
         }else{
             setTimeout(()=>{
-                window.location.href = "/recruiter/dashboard";
+                window.location.href = "/admin/dashboard";
             },1000) 
         }
     }
 
     const handleSwitch = (tab) => {
         if(tab === 1){
-            setLoginType('Employee');
+            setLoginType('User');
         }else{
-            setLoginType('Recruiter');
+            setLoginType('Admin');
         }
     }
 
     return (
-        <div className={loginType === 'Recruiter' ? 'layout' : 'layout1'}>
+        <div className={loginType === 'Admin' ? 'layout' : 'layout1'}>
             <ToastContainer />
         {
             isSubmit
             ? 'Loading...'
             : <>
                 <div className='login-outer'>
-                    <form className={loginType === 'Recruiter' ? 'login-form' : 'login-form1'}>
+                    <form className={loginType === 'Admin' ? 'login-form' : 'login-form1'}>
                         <div className='logo'>
                             <h3>Login as</h3>
-                            <div className={loginType === 'Recruiter' ? 'switcher' : 'switcher1'}>
+                            <div className={loginType === 'Admin' ? 'switcher' : 'switcher1'}>
                                 {
-                                    loginType === 'Recruiter'
+                                    loginType === 'Admin'
                                     ? <label className='switch-activer' style={{animation:'switch-movement 1s 1 forwards'}}></label>
                                     : <label className='switch-activer1' style={{animation:'switch-movement2 1s 1 forwards'}}></label>
                                 }
-                                <div className='switch' onClick={()=>handleSwitch(1)}>Employee</div>
-                                <div className='switch' onClick={()=>handleSwitch(2)}>Recuiter</div>
+                                <div className='switch' onClick={()=>handleSwitch(1)}>User</div>
+                                <div className='switch' onClick={()=>handleSwitch(2)}>Admin</div>
                             </div>
                         </div>
-                        <div className={loginType === 'Recruiter' ? 'login-section' : 'login-section1'}>
+                        <div className={loginType === 'Admin' ? 'login-section' : 'login-section1'}>
                             <label>Email :</label>
                             <input type="text" 
                                     name='inp-mail'
@@ -98,7 +99,7 @@ function Login() {
                                     className='login-mail'
                             ></input>
                         </div>
-                        <div className={loginType === 'Recruiter' ? 'login-section' : 'login-section1'}>
+                        <div className={loginType === 'Admin' ? 'login-section' : 'login-section1'}>
                             <label>Password :</label>
                             <input type="password" 
                                     name='inp-pass'
@@ -117,12 +118,13 @@ function Login() {
                             ></input>
                             <label>Remeber me</label>
                         </div>
-                        <button className={loginType === 'Recruiter' ? 'login-button' : 'login-button1'} onClick={handleSubmit}>login</button>
+                        <button className={loginType === 'Admin' ? 'login-button' : 'login-button1'} onClick={handleSubmit}>login</button>
+                        <Link className='link-ext' to='/register'>Don't have an account ? Create Account here.</Link>
                     </form>
                 </div>
                 <div className='illustration'>
                     {
-                        loginType === 'Recruiter'
+                        loginType === 'Admin'
                         ? <img src={require('../../assets/images/illu-2.png')} alt='simple-illustration' width="400" height="500" className='login-1' style={{animation: 'illu-movement 1s 1 forwards'}}/>
                         : <img src={require('../../assets/images/illu-1.png')} alt='simple-illustration' width="400" height="500" className='login-1' style={{animation: 'illu-movement2 1s 1 forwards'}}/>
                     }

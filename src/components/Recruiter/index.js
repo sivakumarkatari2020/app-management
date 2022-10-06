@@ -2,7 +2,7 @@ import React from 'react';
 import {Routes , Route } from 'react-router-dom';
 import Dashboard from './Dashboard';
 
-function Recruiter() {
+function Admin() {
     return (
         <div>
             <Routes>
@@ -12,4 +12,4 @@ function Recruiter() {
     )
 }
 
-export default Recruiter
+export default Admin
